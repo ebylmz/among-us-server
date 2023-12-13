@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/images">
-        <file>game-map.png</file>
+    <qresource prefix="/assets">
+        <file>images/game-map.png</file>
+        <file>images/red-among-us.png</file>
     </qresource>
 </RCC>

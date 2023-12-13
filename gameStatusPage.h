@@ -3,15 +3,20 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QVBoxLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QIcon>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 class GameStatusPage : public QWidget {
     Q_OBJECT
 
 public:
     explicit GameStatusPage(QWidget *parent = nullptr);
-    void updateGameStatus(int playerHealth, QString playerLocation);
+    void updateGameStatus(int playerHealth, QString playerLocation, int playerX, int playerY);
+
     void disconnect();
 
 signals:

@@ -13,14 +13,12 @@ SOURCES += \
     gameStatusPage.cpp \
     main.cpp \
     mainWindow.cpp \
-    serverConnection.cpp \
-    widget.cpp
+    serverConnection.cpp
 
 HEADERS += \
     gameStatusPage.h \
     mainWindow.h \
-    serverConnection.h \
-    widget.h
+    serverConnection.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
