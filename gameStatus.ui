@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameStatus</class>
+ <widget class="QWidget" name="GameStatus">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1138</width>
+    <height>781</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="2">
+    <widget class="QGraphicsView" name="graphicsView">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="redIconLabel">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/assets/images/red-among-us.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="redPNameLabel">
+       <property name="text">
+        <string>Player</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="whiteIconLabel">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/assets/images/white-among-us.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="whitePNameLabel">
+       <property name="text">
+        <string>Player</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="greenIconLabel">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/assets/images/green-among-us.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="greenPNameLabel">
+       <property name="text">
+        <string>Player</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="blueIconLabel">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/assets/images/light-blue-among-us.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="bluePNameLabel">
+       <property name="text">
+        <string>Player</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="violetIconLabel">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/assets/images/violet-among-us.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="violetPNameLabel">
+       <property name="text">
+        <string>Player</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="yellowIconLabel">
+       <property name="styleSheet">
+        <string notr="true">image: url(:/assets/images/yellow-among-us.png);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLabel" name="YellowPNameLabel">
+       <property name="text">
+        <string>Player</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="disconnectButton">
+     <property name="text">
+      <string>Disconnect</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

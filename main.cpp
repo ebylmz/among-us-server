@@ -5,7 +5,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     MainWindow mainWindow;
-    mainWindow.show(); // Show the main window
+    mainWindow.show();
 
-    return app.exec(); // Start the Qt application event loop
+    return app.exec();
 }

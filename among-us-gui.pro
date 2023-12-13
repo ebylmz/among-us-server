@@ -10,15 +10,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    gameStatusPage.cpp \
+    gameStatus.cpp \
     main.cpp \
     mainWindow.cpp \
-    serverConnection.cpp
+    serverConfiguration.cpp
 
 HEADERS += \
-    gameStatusPage.h \
+    gameStatus.h \
     mainWindow.h \
-    serverConnection.h
+    serverConfiguration.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -27,3 +27,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
+
+FORMS += \
+    gameStatus.ui \
+    serverConfiguration.ui

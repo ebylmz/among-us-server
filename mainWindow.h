@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
-#include "serverConnection.h"
-#include "gameStatusPage.h"
+#include "oldserverConfiguration.h"
+#include "gameStatus.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -14,12 +14,12 @@ public:
 
 private slots:
     void switchToGamePage();
-    void switchToConnectionPage();
+    void switchToConfigurationPage();
 
 private:
     QStackedWidget *stackedWidget;
-    ServerConnection *serverConnection;
-    GameStatusPage *gameStatusPage;
+    ServerConfiguration *serverConfiguration;
+    GameStatus *gameStatus;
 };
 
 #endif // MAINWINDOW_H
