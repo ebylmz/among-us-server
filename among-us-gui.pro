@@ -13,11 +13,15 @@ SOURCES += \
     gameStatus.cpp \
     main.cpp \
     mainWindow.cpp \
+    player.cpp \
+    server.cpp \
     serverConfiguration.cpp
 
 HEADERS += \
     gameStatus.h \
     mainWindow.h \
+    player.h \
+    server.h \
     serverConfiguration.h
 
 # Default rules for deployment.
@@ -30,4 +34,5 @@ RESOURCES += \
 
 FORMS += \
     gameStatus.ui \
+    server.ui \
     serverConfiguration.ui

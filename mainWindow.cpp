@@ -3,17 +3,17 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     stackedWidget = new QStackedWidget(this);
-    serverConfiguration = new ServerConfiguration;
+    server = new Server;
     gameStatus = new GameStatus;
 
     // Add pages to stacked widget
-    stackedWidget->addWidget(serverConfiguration);
+    stackedWidget->addWidget(server);
     stackedWidget->addWidget(gameStatus);
 
     setCentralWidget(stackedWidget);
 
     // Connect signals and slots
-    connect(serverConfiguration, &ServerConfiguration::connectionEstablished, this, &MainWindow::switchToGamePage);
+    connect(server, &Server::serverStarted, this, &MainWindow::switchToGamePage);
     connect(gameStatus, &GameStatus::disconnectRequested, this, &MainWindow::switchToConfigurationPage);
 
     // Set the initial size of the MainWindow
@@ -25,6 +25,6 @@ void MainWindow::switchToGamePage() {
 }
 
 void MainWindow::switchToConfigurationPage() {
-    stackedWidget->setCurrentWidget(serverConfiguration);
+    stackedWidget->setCurrentWidget(server);
     // Perform cleanup or reset server connection if needed
 }

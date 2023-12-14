@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
-#include "oldserverConfiguration.h"
+#include "server.h"
 #include "gameStatus.h"
 
 class MainWindow : public QMainWindow {
@@ -18,7 +18,7 @@ private slots:
 
 private:
     QStackedWidget *stackedWidget;
-    ServerConfiguration *serverConfiguration;
+    Server *server;
     GameStatus *gameStatus;
 };
 
