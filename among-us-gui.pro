@@ -10,14 +10,12 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    gameStatus.cpp \
     main.cpp \
     mainWindow.cpp \
     player.cpp \
     server.cpp
 
 HEADERS += \
-    gameStatus.h \
     mainWindow.h \
     player.h \
     server.h
@@ -31,5 +29,4 @@ RESOURCES += \
     res.qrc
 
 FORMS += \
-    gameStatus.ui \
-    server.ui
+    mainWindow.ui

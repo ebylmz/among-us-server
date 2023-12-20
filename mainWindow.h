@@ -1,25 +1,35 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QStackedWidget>
+#include <QWidget>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include "server.h"
-#include "gameStatus.h"
+#include "player.h"
 
-class MainWindow : public QMainWindow {
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QWidget
+{
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+    void startServer();
+    void stopServer();
 
 private slots:
-    void switchToGamePage();
-    void switchToConfigurationPage();
+    void registerPlayer(PlayerInfo *player);
+    void updatePlayer();
 
 private:
-    QStackedWidget *stackedWidget;
+    Ui::MainWindow *ui;
     Server *server;
-    GameStatus *gameStatus;
 };
 
 #endif // MAINWINDOW_H
+

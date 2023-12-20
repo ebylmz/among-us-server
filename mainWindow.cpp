@@ -1,30 +1,69 @@
 #include "mainWindow.h"
+#include "ui_mainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent) {
-    stackedWidget = new QStackedWidget(this);
-    server = new Server;
-    gameStatus = new GameStatus(server);
+    : QWidget(parent)
+    , ui(new Ui::MainWindow)
+    , server(new Server)
+{
+    ui->setupUi(this);
 
-    // Add pages to stacked widget
-    stackedWidget->addWidget(server);
-    stackedWidget->addWidget(gameStatus);
+    ui->graphicsView->setScene(new QGraphicsScene());
+    updatePlayer();
 
-    setCentralWidget(stackedWidget);
+    ui->ipAddressLabel->setText("IP Address: " + server->getLocalIpAddress());
 
-    // Connect signals and slots
-    connect(server, &Server::serverStarted, this, &MainWindow::switchToGamePage);
-    connect(gameStatus, &GameStatus::disconnectRequested, this, &MainWindow::switchToConfigurationPage);
-
-    // Set the initial size of the MainWindow
-    resize(1280, 720); // Set a size of 1280x720 pixels
+    connect(ui->runButton, &QPushButton::clicked, this, &MainWindow::startServer);
+    connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopServer);
 }
 
-void MainWindow::switchToGamePage() {
-    stackedWidget->setCurrentWidget(gameStatus);
+MainWindow::~MainWindow()
+{
+    delete ui;
 }
 
-void MainWindow::switchToConfigurationPage() {
-    stackedWidget->setCurrentWidget(server);
-    // Perform cleanup or reset server connection if needed
+void MainWindow::startServer()
+{
+    int port = ui->portLineEdit->text().toInt();
+    server->start(port);
+}
+
+void MainWindow::stopServer()
+{
+}
+
+void MainWindow::registerPlayer(PlayerInfo *player)
+{
+
+}
+
+void MainWindow::updatePlayer()
+{
+
+    int playerX = 300, playerY = 300;
+
+    // Access QGraphicsView from the UI
+    QGraphicsView *view = ui->graphicsView;
+
+    if (view) {
+        // Retrieve the QGraphicsScene from the QGraphicsView
+        QGraphicsScene *scene = view->scene();
+
+        if (scene) {
+            // Load the game map image
+            QPixmap mapImage(":/assets/images/game-map-small.png");
+
+            // Clear the scene before adding the map image
+            scene->clear();
+
+            // Add the game map image to the scene
+            QGraphicsPixmapItem *mapPixmapItem = scene->addPixmap(mapImage);
+            //view->fitInView(mapPixmapItem, Qt::KeepAspectRatio);
+
+            // Create and position the player icon
+            QGraphicsPixmapItem *playerIcon = new QGraphicsPixmapItem(QPixmap(":assets/images/red-among-us.png"));
+            playerIcon->setPos(playerX, playerY);
+            scene->addItem(playerIcon);
+        }
+    }
 }

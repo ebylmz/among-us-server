@@ -3,29 +3,18 @@
 
 Server::Server(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Server)
 {
-    ui->setupUi(this);
-
-    QString localIpAddress = getLocalIpAddress();
-    ui->ipAddressLabel->setText("IP Address: " + localIpAddress);
-
-
     tcpServer = new QTcpServer(this);
-    connect(ui->runButton, &QPushButton::clicked, this, &Server::startServer);
+
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
 }
 
 Server::~Server()
 {
-    delete ui;
 }
 
-void Server::startServer()
+void Server::start(int port)
 {
-    // QString serverIP = ui->ipAdressLabel->text();
-    int port = ui->portLineEdit->text().toInt();
-
     // TODO: Get the port number from the input
     if (!tcpServer->listen(QHostAddress::Any, port)) {
         qDebug() << "Server could not start!";
@@ -35,7 +24,13 @@ void Server::startServer()
     }
 }
 
-void Server::newConnection() {
+void Server::stop()
+{
+
+}
+
+void Server::newConnection()
+{
     qDebug() << "New client connected...";
 
     while (tcpServer->hasPendingConnections()) {
@@ -45,7 +40,8 @@ void Server::newConnection() {
     }
 }
 
-void Server::readClientData() {
+void Server::readClientData()
+{
     for (QTcpSocket *client : clients) {
         if (client->bytesAvailable() > 0) {
             // Read data from the client
@@ -55,7 +51,6 @@ void Server::readClientData() {
             // Check if it is registered player, looking the hash map
             // read the packet accordingly for this information
 /*
-*/
             if (false) {
                 PlayerInfo *player = new PlayerInfo("player 1", false, Red);
                 emit newPlayer(player);
@@ -65,6 +60,7 @@ void Server::readClientData() {
                 PlayerTransform *ptransform = new PlayerTransform(300, 300, true);
                 emit updatePlayer(ptransform);
             }
+*/
 
             // Processing received data
             QString receivedData = QString::fromUtf8(data);
@@ -74,7 +70,8 @@ void Server::readClientData() {
     }
 }
 
-QString Server::getLocalIpAddress() {
+QString Server::getLocalIpAddress()
+{
     QString localIpAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
     // Retrieve the first non-localhost IPv4 address

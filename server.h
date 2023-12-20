@@ -7,11 +7,7 @@
 #include <QMessageBox>
 #include <QNetworkInterface>
 #include <player.h>
-#include <gameStatus.h>
 
-namespace Ui {
-class Server;
-}
 
 class Server : public QWidget
 {
@@ -20,9 +16,11 @@ class Server : public QWidget
 public:
     explicit Server(QWidget *parent = nullptr);
     ~Server();
+    QString getLocalIpAddress();
+    void start(int port);
+    void stop();
 
 private slots:
-    void startServer();
     void newConnection();
     void readClientData();
 
@@ -32,11 +30,8 @@ signals:
     void updatePlayer(PlayerTransform *ptransform);
 
 private:
-    Ui::Server *ui;
     QTcpServer *tcpServer;
     QList<QTcpSocket *> clients;
-
-    QString getLocalIpAddress();
 };
 
 #endif // SERVER_H
