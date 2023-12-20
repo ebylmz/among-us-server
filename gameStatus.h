@@ -5,6 +5,8 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
+#include "server.h"
+#include "player.h"
 
 namespace Ui {
 class GameStatus;
@@ -19,13 +21,14 @@ public:
     ~GameStatus();
 
     void disconnect();
-    void updateGameStatus();
 
 signals:
     void disconnectRequested();
 
 private slots:
     void on_disconnectButton_clicked();
+    void registerPlayer(PlayerInfo *player);
+    void updatePlayer(PlayerTransform *ptransform);
 
 private:
     Ui::GameStatus *ui;

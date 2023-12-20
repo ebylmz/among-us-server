@@ -10,7 +10,12 @@ GameStatus::GameStatus(QWidget *parent)
     ui->graphicsView->setScene(new QGraphicsScene());
     //ui->graphicsView->setFixedSize(1280, 720);
 
-    GameStatus::updateGameStatus();
+    // requires a server object
+
+    //connect(server, &Server::newPlayer, this, &GameStatus::registerPlayer);
+    //connect(server, &Server::updatePlayer, this, &GameStatus::updatePlayer);
+
+    GameStatus::updatePlayer(nullptr);
 }
 
 GameStatus::~GameStatus()
@@ -18,7 +23,11 @@ GameStatus::~GameStatus()
     delete ui;
 }
 
-void GameStatus::updateGameStatus() {
+void GameStatus::registerPlayer(PlayerInfo *player) {
+
+}
+
+void GameStatus::updatePlayer(PlayerTransform *ptransform) {
 
     int playerX = 300, playerY = 300;
 

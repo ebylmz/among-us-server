@@ -4,7 +4,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     stackedWidget = new QStackedWidget(this);
     server = new Server;
-    gameStatus = new GameStatus;
+    gameStatus = new GameStatus(server);
 
     // Add pages to stacked widget
     stackedWidget->addWidget(server);

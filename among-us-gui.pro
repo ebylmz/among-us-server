@@ -14,15 +14,13 @@ SOURCES += \
     main.cpp \
     mainWindow.cpp \
     player.cpp \
-    server.cpp \
-    serverConfiguration.cpp
+    server.cpp
 
 HEADERS += \
     gameStatus.h \
     mainWindow.h \
     player.h \
-    server.h \
-    serverConfiguration.h
+    server.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,5 +32,4 @@ RESOURCES += \
 
 FORMS += \
     gameStatus.ui \
-    server.ui \
-    serverConfiguration.ui
+    server.ui

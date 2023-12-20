@@ -13,10 +13,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>530</x>
      <y>132</y>
      <width>221</width>
      <height>401</height>
@@ -43,7 +43,11 @@
         <string>Port:</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="portLineEdit"/>
+      <widget class="QLineEdit" name="portLineEdit">
+       <property name="text">
+        <string>8080</string>
+       </property>
+      </widget>
      </widget>
     </item>
     <item row="0" column="0">

@@ -6,6 +6,8 @@
 #include <QTcpSocket>
 #include <QMessageBox>
 #include <QNetworkInterface>
+#include <player.h>
+#include <gameStatus.h>
 
 namespace Ui {
 class Server;
@@ -26,6 +28,8 @@ private slots:
 
 signals:
     void serverStarted();
+    void newPlayer(PlayerInfo *player);
+    void updatePlayer(PlayerTransform *ptransform);
 
 private:
     Ui::Server *ui;
