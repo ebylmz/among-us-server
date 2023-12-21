@@ -8,6 +8,7 @@
 #include <QNetworkInterface>
 #include <QJsonParseError>
 #include <QJsonObject>
+#include <QTimer>
 #include <utils.h>
 
 class Server : public QWidget
@@ -25,6 +26,8 @@ private slots:
     void handleNewTcpConnection();
     void handleTcpData(QTcpSocket *socket);
     void handleUdpDatagrams();
+    void sendPlayerData();
+
 /*
 signals:
     void updatePlayer(PlayerTransform *ptransform);

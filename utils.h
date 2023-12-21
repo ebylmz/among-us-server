@@ -4,11 +4,25 @@
 #include <QWidget>
 #include <QNetworkInterface>
 
+class Constants {
+public:
+    static const int SERVER_TCP_PORT = 8080;
+    static const int SERVER_UDP_PORT = 8081;
+    static const int CLIENT_UDP_PORT = 11002;
+};
+
+
 class PlayerTransform
 {
 public:
     PlayerTransform(int x, int y, bool isLive);
     ~PlayerTransform();
+
+    int getX();
+    void setX(int x);
+
+    int getY();
+    void setY(int y);
 
 private:
     int x;
@@ -28,6 +42,9 @@ public:
 
     int getPacketCounter();
     void setPacketCounter(int counter);
+
+    QHostAddress getIpAddress();
+    void setIpAddress(QHostAddress ip);
 
     PlayerTransform getPlayerTransform();
     void setPlayerTransform(PlayerTransform transform);

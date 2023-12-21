@@ -15,23 +15,26 @@ Server::~Server()
 }
 
 void Server::start(int port)
-{
-    // TODO: Get the port number from the input
+{   
     if (!tcpServer->listen(QHostAddress::Any, port)) {
         qDebug() << "Server could not start!";
     } else {
         qDebug() << "Server started. Listening...";
     }
 
-    //////////////// fix
-    int SERVER_UDP_PORT = 8081;
-
-    if (!udpSocket->bind(QHostAddress::Any, SERVER_UDP_PORT)) {
+    if (!udpSocket->bind(QHostAddress::Any, Constants::SERVER_UDP_PORT)) {
         qDebug() << "UDP Socket could not bind!";
         // Handle error
     } else {
-        qDebug() << "UDP Socket bound to port" << SERVER_UDP_PORT;
+        qDebug() << "UDP Socket bound to port" << Constants::SERVER_UDP_PORT;
     }
+
+    QTimer *updateTimer = new QTimer(this);
+    connect(updateTimer, &QTimer::timeout, this, &Server::sendPlayerData);
+
+    // Set the interval in milliseconds (e.g., 1000 ms = 1 second)
+    int updateInterval = 1000;
+    updateTimer->start(updateInterval);
 }
 
 void Server::stop()
@@ -135,6 +138,46 @@ void Server::processReceivedData(const QByteArray &data)
                 // data.setPlayerTransform(new PlayerTransform(0, 0, true));
             }
         }
+    }
+}
+
+void Server::sendPlayerData()
+{
+    qDebug() << "Send player data";
+
+    // Iterate through your clients
+    for (auto it = clients.begin(); it != clients.end(); ++it) {
+        int clientId = it.key();
+        ClientData &clientData = it.value();
+
+        // Update player transforms or any other necessary data
+        // PlayerTransform playerTransform = // Get player transform data
+
+        // clientData.setPlayerTransform(playerTransform);
+        // int packetCounter = // Get the updated packet counter
+        // clientData.setPacketCounter(packetCounter);
+    }
+
+    // Serialize client transforms to JSON
+    QJsonObject clientTransformsObject;
+    for (auto it = clients.begin(); it != clients.end(); ++it) {
+        int clientId = it.key();
+        PlayerTransform playerTransform = it.value().getPlayerTransform();
+
+        QJsonObject transformObject;
+        transformObject["positionX"] = playerTransform.getX();
+        transformObject["positionY"] = playerTransform.getY();
+
+        clientTransformsObject[QString::number(clientId)] = transformObject;
+    }
+
+    QJsonDocument doc(clientTransformsObject);
+    QByteArray payload = doc.toJson();
+
+    // Send serialized JSON data to each client
+    for (auto it = clients.begin(); it != clients.end(); ++it) {
+        QHostAddress clientIp = it.value().getIpAddress();
+        udpSocket->writeDatagram(payload, clientIp, Constants::CLIENT_UDP_PORT);
     }
 }
 
