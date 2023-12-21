@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QMessageBox>
+#include <QUdpSocket>
 #include <QNetworkInterface>
 #include <QJsonParseError>
 #include <QJsonObject>
@@ -24,6 +24,7 @@ public:
 private slots:
     void handleNewTcpConnection();
     void handleTcpData(QTcpSocket *socket);
+    void handleUdpDatagrams();
 /*
 signals:
     void updatePlayer(PlayerTransform *ptransform);
@@ -31,7 +32,10 @@ signals:
 
 private:
     QTcpServer *tcpServer;
+    QUdpSocket *udpSocket;
     QMap<int, ClientData> clients;
+
+    void processReceivedData(const QByteArray &data);
 };
 
 #endif // SERVER_H

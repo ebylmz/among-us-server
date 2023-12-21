@@ -20,14 +20,24 @@ class ClientData
 {
 public:
     ClientData(QString name, QHostAddress ip, int id);
+    ClientData();
     ~ClientData();
+
+    QString getName();
+    void setName(QString name);
+
+    int getPacketCounter();
+    void setPacketCounter(int counter);
+
+    PlayerTransform getPlayerTransform();
+    void setPlayerTransform(PlayerTransform transform);
 
 private:
     QString name;
     QHostAddress ip;
     int id;
     PlayerTransform playerTransform;
-    // int lastPacketCounter;
+    int packetCounter;
 };
 
 struct LoginRequest
