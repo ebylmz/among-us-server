@@ -6,8 +6,9 @@
 #include <QTcpSocket>
 #include <QMessageBox>
 #include <QNetworkInterface>
-#include <player.h>
-
+#include <QJsonParseError>
+#include <QJsonObject>
+#include <utils.h>
 
 class Server : public QWidget
 {
@@ -21,17 +22,16 @@ public:
     void stop();
 
 private slots:
-    void newConnection();
-    void readClientData();
-
+    void handleNewTcpConnection();
+    void handleTcpData(QTcpSocket *socket);
+/*
 signals:
-    void serverStarted();
-    void newPlayer(PlayerInfo *player);
     void updatePlayer(PlayerTransform *ptransform);
+*/
 
 private:
     QTcpServer *tcpServer;
-    QList<QTcpSocket *> clients;
+    QMap<int, ClientData> clients;
 };
 
 #endif // SERVER_H

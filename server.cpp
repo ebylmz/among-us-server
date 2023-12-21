@@ -1,12 +1,11 @@
 #include "server.h"
-#include "ui_server.h"
 
 Server::Server(QWidget *parent)
     : QWidget(parent)
 {
     tcpServer = new QTcpServer(this);
 
-    connect(tcpServer, &QTcpServer::newConnection, this, &Server::newConnection);
+    connect(tcpServer, &QTcpServer::newConnection, this, &Server::handleNewTcpConnection);
 }
 
 Server::~Server()
@@ -20,7 +19,6 @@ void Server::start(int port)
         qDebug() << "Server could not start!";
     } else {
         qDebug() << "Server started. Listening...";
-        emit serverStarted();
     }
 }
 
@@ -29,43 +27,54 @@ void Server::stop()
 
 }
 
-void Server::newConnection()
+void Server::handleNewTcpConnection()
 {
-    qDebug() << "New client connected...";
+    QTcpSocket *clientSocket = tcpServer->nextPendingConnection();
 
-    while (tcpServer->hasPendingConnections()) {
-        QTcpSocket *clientSocket = tcpServer->nextPendingConnection();
-        clients.append(clientSocket);
-        connect(clientSocket, &QTcpSocket::readyRead, this, &Server::readClientData);
-    }
+    connect(clientSocket, &QTcpSocket::readyRead, this, [=]() {
+        handleTcpData(clientSocket);
+    });
+
+    qDebug() << "New client connected..." ;
 }
 
-void Server::readClientData()
+void Server::handleTcpData(QTcpSocket *socket)
 {
-    for (QTcpSocket *client : clients) {
-        if (client->bytesAvailable() > 0) {
-            // Read data from the client
-            QByteArray data = client->readAll();
-            qDebug() << "Received data: " << data;
+    if (socket->bytesAvailable() > 0) {
+        QByteArray requestData = socket->readAll();
+        QString jsonString(requestData);
 
-            // Check if it is registered player, looking the hash map
-            // read the packet accordingly for this information
-/*
-            if (false) {
-                PlayerInfo *player = new PlayerInfo("player 1", false, Red);
-                emit newPlayer(player);
-            }
-            else {
-                // Update the game map based on received information
-                PlayerTransform *ptransform = new PlayerTransform(300, 300, true);
-                emit updatePlayer(ptransform);
-            }
-*/
+        // Parse the JSON data
+        QJsonParseError parseError;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonString.toUtf8(), &parseError);
 
-            // Processing received data
-            QString receivedData = QString::fromUtf8(data);
-            qDebug() << "Received from client:" << receivedData;
-            qDebug() << "Received from client:" << data;
+        if (parseError.error != QJsonParseError::NoError) {
+            qDebug() << "JSON parse error:" << parseError.errorString();
+            return;
+        }
+
+        if (jsonDoc.isObject()) {
+            QJsonObject jsonObj = jsonDoc.object();
+
+            // Extract data from JSON object
+            QString clientName = jsonObj["clientName"].toString();
+            QString clientIp = jsonObj["clientIp"].toString();
+            int clientId = clients.size();
+
+            ClientData clientData(clientName, QHostAddress(clientIp), clientId);
+            clients.insert(clientId, clientData);
+
+            qDebug() << "New client login " << clientId << ", with nickname " << clientName;
+
+            // Prepare and send the response JSON
+            QJsonObject responseObj;
+            responseObj["id"] = clientId; // Assuming you want to send the client ID as response
+
+            QJsonDocument responseDoc(responseObj);
+            QByteArray responseData = responseDoc.toJson(QJsonDocument::Compact);
+
+            socket->write(responseData); // Sending the response back to the client
+
         }
     }
 }

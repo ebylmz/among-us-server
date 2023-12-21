@@ -20,16 +20,4 @@ private:
     Color skinColor;
 };
 
-class PlayerTransform
-{
-public:
-    PlayerTransform(int x, int y, bool isLive);
-    ~PlayerTransform();
-
-private:
-    int x;
-    int y;
-    bool isLive;
-};
-
 #endif // PLAYER_H
